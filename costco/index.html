@@ -196,7 +196,7 @@ const route = () => {
  return {id:p[0]||'costco', section:p[1]||'overview'};
 };
 function headerTrail(c,section) {
- return `<div class="breadcrumbs"><a href="#/">All organizations</a><span>›</span><a href="#/${c.id}/overview">${esc(c.org)}</a><span>›</span><span>${esc(section)}</span></div>`;
+ return `<div class="breadcrumbs"><a href="../">All organizations</a><span>›</span><a href="#/${c.id}/overview">${esc(c.org)}</a><span>›</span><span>${esc(section)}</span></div>`;
 }
 function sidebarRender(r){
  const showCase=r.id==='costco';
@@ -207,7 +207,7 @@ function sidebarRender(r){
  } else {
    base+=`<a class="side-nav" href="#/costco/overview">⌂ &nbsp; Costco case portal</a>`;
  }
- base+=`<div class="side-divider"></div><div class="side-label">CASE DIRECTORY</div><a class="side-nav" href="#/"><span class="side-icon">▦</span><span>All six organizations</span></a>`;
+ base+=`<div class="side-divider"></div><div class="side-label">CASE DIRECTORY</div><a class="side-nav" href="../"><span class="side-icon">▦</span><span>All six organizations</span></a>`;
  base+=`<div class="sidebar-spacer"></div><div class="sidebar-note"><div class="sidebar-note-icon">ⓘ</div><strong>CASE FILE 01</strong><p>Review the available documents and watch for additional case updates.</p></div></div>`;
  sidebar.innerHTML=base;
 }
@@ -218,10 +218,10 @@ function homeRender(){
  <div class="notice"><strong>About the case materials</strong><p>The operations scenarios are designed for classroom management analysis.</p></div></div>`;
 }
 function draftRender(c){
- return `<div class="page-width">${headerTrail({id:c.id,org:c.name},'Preview')}<div class="draft-page"><span class="section-kicker">CASE ${c.number} · ${esc(c.sector)}</span><h1>${esc(c.tagline)}</h1><h2>${esc(c.name)}</h2><p>The interactive case file for this organization has not been drafted or released yet. The site navigation and shared structure are ready, but no case evidence is available.</p><a href="#/" class="action-link">← Return to all organizations</a></div></div>`;
+ return `<div class="page-width">${headerTrail({id:c.id,org:c.name},'Preview')}<div class="draft-page"><span class="section-kicker">CASE ${c.number} · ${esc(c.sector)}</span><h1>${esc(c.tagline)}</h1><h2>${esc(c.name)}</h2><p>The interactive case file for this organization has not been drafted or released yet. The site navigation and shared structure are ready, but no case evidence is available.</p><a href="../" class="action-link">← Return to all organizations</a></div></div>`;
 }
 function caseHeader(r){
- return `<div class="case-header"><div class="case-head-left"><div class="breadcrumbs"><a href="#/">Case Directory</a> <span>›</span> <span>Costco Wholesale</span> <span>›</span> <span>Harbor Point</span></div><div class="case-tagline">RETAIL OPERATIONS <span class="case-tag-separator">/</span> MANAGEMENT REVIEW</div><h1>Sold Out, Overstocked, and Overworked</h1><p>Harbor Point Warehouse <span class="dotsep">·</span> Northern New Jersey <span class="dotsep">·</span> Review date: November 3, 2026</p></div><div class="head-status"><span class="pill pill-green"><span class="live-dot"></span> WEEK 10 AVAILABLE</span><span class="case-ref">REFERENCE ${esc(costco.reference)}</span></div></div>`;
+ return `<div class="case-header"><div class="case-head-left"><div class="breadcrumbs"><a href="../">Case Directory</a> <span>›</span> <span>Costco Wholesale</span> <span>›</span> <span>Harbor Point</span></div><div class="case-tagline">RETAIL OPERATIONS <span class="case-tag-separator">/</span> MANAGEMENT REVIEW</div><h1>Sold Out, Overstocked, and Overworked</h1><p>Harbor Point Warehouse <span class="dotsep">·</span> Northern New Jersey <span class="dotsep">·</span> Review date: November 3, 2026</p></div><div class="head-status"><span class="pill pill-green"><span class="live-dot"></span> WEEK 10 AVAILABLE</span><span class="case-ref">REFERENCE ${esc(costco.reference)}</span></div></div>`;
 }
 function caseTabs(r){let nav=[['overview','Overview'],['story','The Warehouse'],['people','People'],['evidence','Evidence'],['metrics','Dashboard'],['constraints','Constraints'],['decision','Decision'],['releases','Releases']];
  return `<nav class="horizontal-tabs" aria-label="Costco case sections">${nav.map(([id,text])=>`<a class="${r.section===id?'active':''}" href="#/costco/${id}" ${r.section===id?'aria-current="page"':''}>${text}</a>`).join('')}</nav>`;
