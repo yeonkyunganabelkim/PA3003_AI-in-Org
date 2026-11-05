@@ -157,6 +157,17 @@ function profileOpen(id){const p=D.people.find(x=>x.id===id);if(!p)return;modal.
 function closeModal(){modal.innerHTML='';document.body.style.overflow=''}
 const views={overview,story,people,incidents,evidence:evidencePage,metrics,zones,constraints,updates};
 function render(){const r=location.hash.replace('#','')||'overview',id=views[r]?r:'overview';sideRender(id);main.innerHTML=views[id]();document.title=`${routes.find(x=>x[0]===id)?.[1]||'Overview'} | Raritan Gateway Operations Review`;side.classList.remove('open');document.getElementById('menuBtn').setAttribute('aria-expanded','false');window.scrollTo(0,0)}
+// Keep the current case page active when Skip to content is selected.
+document.addEventListener('click', event => {
+ const skipLink = event.target.closest('a[href="#main"]');
+ if (!skipLink) return;
+ event.preventDefault();
+ const target = document.getElementById('main');
+ if (target) {
+   target.focus({preventScroll:true});
+   target.scrollIntoView({block:'start'});
+ }
+});
 addEventListener('hashchange',render);document.addEventListener('click',e=>{const c=e.target.closest('[data-chapter]');if(c){e.preventDefault();chapter=+c.dataset.chapter;render();return}const p=e.target.closest('[data-person]');if(p){profileOpen(p.dataset.person);return}const cl=e.target.closest('[data-close]');if(cl){closeModal();return}const a=e.target.closest('[data-incident]');if(a){inc=a.dataset.incident;render();return}const t=e.target.closest('[data-evidence]');if(t){evidence=t.dataset.evidence;term='';render();return}const z=e.target.closest('[data-zone]');if(z){zone=z.dataset.zone;render();return}const m=e.target.closest('[data-metric]');if(m){metric=m.dataset.metric;render();return}if(e.target.closest('#csv-download')){downloadCSV();return}if(e.target.closest('#menuBtn')){const open=side.classList.toggle('open');e.target.closest('#menuBtn').setAttribute('aria-expanded',String(open));return}});document.addEventListener('input',e=>{if(e.target.id==='e-search'){term=e.target.value;const a=D.feedback.filter(x=>[x.id,x.date,x.type,x.zone,x.text].join(' ').toLowerCase().includes(term.toLowerCase()));document.getElementById('e-results').innerHTML=feedbackCards(a);document.getElementById('e-count').textContent=`${a.length} of ${D.feedback.length} comments`;}});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});render();
 })();
 </script></body></html>
