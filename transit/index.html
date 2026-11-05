@@ -154,7 +154,18 @@ function updateSearch(q){const targets=JSON.parse(overlay.dataset.targets||'[]')
 const views={home:preview,story,people,investigations,channels,riders,metrics,documents,constraints,updates};
 function render(){const key=location.hash.slice(1)||'home';const page=views[key]?key:'home';navView(page);main.innerHTML=views[page]();sidebar.classList.remove('open');document.getElementById('mobileToggle').setAttribute('aria-expanded','false');document.getElementById('mobileDim')?.remove();document.title=`${routes.find(x=>x[0]===page)?.[1]} | NJ TRANSIT Case 04`;window.scrollTo(0,0)}
 function renderSame(){const y=window.scrollY;let key=location.hash.slice(1)||'home';main.innerHTML=(views[key]||preview)();window.scrollTo(0,y)}
-window.addEventListener('hashchange',()=>{modalClose();render()});
+window.// Keep the current case page active when Skip to content is selected.
+document.addEventListener('click', event => {
+ const skipLink = event.target.closest('a[href="#main"]');
+ if (!skipLink) return;
+ event.preventDefault();
+ const target = document.getElementById('main');
+ if (target) {
+   target.focus({preventScroll:true});
+   target.scrollIntoView({block:'start'});
+ }
+});
+addEventListener('hashchange',()=>{modalClose();render()});
 document.addEventListener('click',e=>{let c=e.target.closest('[data-close]');if(c){if(c.classList.contains('overlay')&&e.target!==c)return;modalClose();return}const person=e.target.closest('[data-person]');if(person){modalPerson(person.dataset.person);return}const chap=e.target.closest('[data-chapter]');if(chap){const v=+chap.dataset.chapter;if(v>=0&&v<C.chapter.length){chapter=v;renderSame()}return}const inc=e.target.closest('[data-incident]');if(inc){incident=inc.dataset.incident;renderSame();return}if(e.target.closest('#searchButton')){searchOpen();return}if(e.target.closest('#mobileToggle')){const on=sidebar.classList.toggle('open');document.getElementById('mobileToggle').setAttribute('aria-expanded',String(on));if(on){let dim=document.createElement('div');dim.className='mobile-dim';dim.id='mobileDim';dim.onclick=()=>{sidebar.classList.remove('open');dim.remove()};document.body.appendChild(dim)}else document.getElementById('mobileDim')?.remove()}});
 document.addEventListener('change',e=>{if(e.target.id==='metricSelect'){metric=e.target.value;renderSame()}if(e.target.id==='eventFilter'){eventFilter=e.target.value;const sub=C.incidents.filter(x=>eventFilter==='All'||x.corridor===eventFilter);if(!sub.some(x=>x.id===incident))incident=sub[0]?.id||incident;renderSame()}if(e.target.id==='riderType'){riderFilter=e.target.value;renderSame()}});
 document.addEventListener('input',e=>{if(e.target.id==='caseSearchInput')updateSearch(e.target.value);if(e.target.id==='riderSearch'){riderQuery=e.target.value;const rows=C.feedback.filter(f=>(riderFilter==='All'||f.type===riderFilter)&&[f.id,f.date,f.type,f.corridor,f.quote].join(' ').toLowerCase().includes(riderQuery.toLowerCase()));document.getElementById('feedbackGrid').innerHTML=feedbackCards(rows);document.getElementById('feedbackCounter').textContent=`${rows.length} of ${C.feedback.length} records`}});
