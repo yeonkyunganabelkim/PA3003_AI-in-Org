@@ -313,6 +313,22 @@ document.addEventListener('change',e=>{if(e.target.id==='metric-pick'){activeMet
 document.addEventListener('input',e=>{if(e.target.id==='feedback-search'){const start=e.target.selectionStart;feedbackQuery=e.target.value;const r=main.querySelector('.feedback-grid');const matches=costco.feedback.filter(f=>[f.id,f.category,f.quote].join(' ').toLowerCase().includes(feedbackQuery.toLowerCase()));r.innerHTML=matches.map(f=>`<article class="feedback-card"><div><span class="doc-id">MEMBER ${esc(f.id)}</span><span class="doc-date">${esc(f.date)}</span></div><strong>${esc(f.category)}</strong><p>“${esc(f.quote)}”</p></article>`).join('')||'<p>No records match that search.</p>';main.querySelector('.result-count').textContent=`${matches.length} of ${costco.feedback.length} records`;}}
 );
 document.addEventListener('keydown',e=>{if(e.key==='Escape')profileClose()});
+// Prevent in-page anchors from being mistaken for a new hash route.
+document.addEventListener('click', event => {
+ const chapterLink = event.target.closest('.chapter-list a[href^="#chapter-"]');
+ if (chapterLink) {
+   event.preventDefault();
+   const target = document.getElementById(chapterLink.getAttribute('href').slice(1));
+   if (target) target.scrollIntoView({behavior:'smooth',block:'start'});
+   return;
+ }
+ const skipLink = event.target.closest('a[href="#main"]');
+ if (skipLink) {
+   event.preventDefault();
+   main.focus({preventScroll:true});
+   main.scrollIntoView({block:'start'});
+ }
+});
 window.addEventListener('hashchange',render);
 render();
 
