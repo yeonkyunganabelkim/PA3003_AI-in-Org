@@ -43,7 +43,18 @@ function closeModal(){overlay.innerHTML='';document.body.style.overflow=''}
 const views={home:homepage,story,people,journeys,voices,capacity,reports,constraints,updates};
 function render(){const path=location.hash.slice(1)||'home',page=views[path]?path:'home';navRender(page);main.innerHTML=views[page]();nav.classList.remove('open');const shade=document.getElementById('navShade');if(shade)shade.remove();document.getElementById('menuToggle').setAttribute('aria-expanded','false');document.title=`${routes.find(r=>r[0]===page)?.[1]||'Access Overview'} | Harbor View Review`;window.scrollTo(0,0)}
 function rerenderKeepPosition(){const y=window.scrollY;const page=location.hash.slice(1)||'home';main.innerHTML=(views[page]||homepage)();window.scrollTo(0,y)}
-window.addEventListener('hashchange',()=>{closeModal();render()});document.addEventListener('click',e=>{
+window.// Keep the current case page active when Skip to content is selected.
+document.addEventListener('click', event => {
+ const skipLink = event.target.closest('a[href="#main"]');
+ if (!skipLink) return;
+ event.preventDefault();
+ const target = document.getElementById('main');
+ if (target) {
+   target.focus({preventScroll:true});
+   target.scrollIntoView({block:'start'});
+ }
+});
+addEventListener('hashchange',()=>{closeModal();render()});document.addEventListener('click',e=>{
  if(e.target.closest('[data-close]')){if(e.target.closest('.modal')&&!e.target.closest('button[data-close]'))return;closeModal();return}
  const p=e.target.closest('[data-person]');if(p){personModal(p.dataset.person);return}
  const ch=e.target.closest('[data-chapter]');if(ch){chapter=Number(ch.dataset.chapter);rerenderKeepPosition();return}
