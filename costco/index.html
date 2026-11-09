@@ -207,6 +207,7 @@ function sidebarRender(r){
  } else {
    base+=`<a class="side-nav" href="#/costco/overview">⌂ &nbsp; Costco case portal</a>`;
  }
+ base+=`<a class="pa3003-inbox-link" href="./dissent-inbox.html">✉ <span>Dissent Inbox · Week 11</span></a>`;
  base+=`<div class="side-divider"></div><div class="side-label">CASE DIRECTORY</div><a class="side-nav" href="../"><span class="side-icon">▦</span><span>All six organizations</span></a>`;
  base+=`</div>`;
  sidebar.innerHTML=base;
@@ -333,22 +334,7 @@ render();
 
 </script>
 
-<!-- PA3003_WEEK11_ACTIONS_START -->
-<style>
-#pa3003-week11-links{position:fixed;bottom:18px;right:18px;z-index:950;display:flex;flex-direction:column;gap:8px;max-width:min(310px,calc(100vw - 32px));box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-#pa3003-week11-links .w11-action{display:block;padding:12px 16px;border-radius:11px;text-decoration:none;box-shadow:0 4px 19px #0003;font-size:14px;font-weight:800;line-height:1.25;border:1px solid #d8d3e4}
-#pa3003-week11-links .w11-inbox{color:#fff;background:#6c2b8d;border-color:#6c2b8d}
-#pa3003-week11-links .w11-doc{color:#392350;background:#fff}
-#pa3003-week11-links .w11-pending{background:#f3f3f5;color:#5f6672;font-size:12px;box-shadow:0 3px 10px #0001}
-#pa3003-week11-links a:hover{filter:brightness(1.08);transform:translateY(-1px)}
-#pa3003-week11-links a:focus-visible{outline:3px solid #f5a623;outline-offset:3px}
-@media(max-width:600px){#pa3003-week11-links{right:9px;bottom:9px;max-width:225px}#pa3003-week11-links .w11-action{padding:10px 12px;font-size:12px}}
-</style>
-<nav id="pa3003-week11-links" aria-label="Week 11 team resources">
-<a class="w11-action w11-inbox" href="./dissent-inbox.html">✉ Dissent Inbox · Week 11 ↗</a>
-<span class="w11-action w11-pending">Team Document: Link Pending</span>
-</nav>
-<!-- PA3003_WEEK11_ACTIONS_END -->
+<!-- PA3003_WEEK11_ACTIONS_START --><style>.pa3003-inbox-link{display:flex;align-items:center;gap:11px;padding:12px;border-radius:9px;color:#fff!important;background:#5b3676;text-decoration:none;font-weight:800;font-size:13px;margin:7px 3px}.pa3003-inbox-link:hover{background:#79489d}.pa3003-inbox-link:focus-visible{outline:3px solid #ffbb67;outline-offset:2px}</style><div id="pa3003-week11-links"><span style="font-size:12px;color:#667">Team Document: Link Pending</span></div><!-- PA3003_WEEK11_ACTIONS_END -->
 
 </body>
 </html>
