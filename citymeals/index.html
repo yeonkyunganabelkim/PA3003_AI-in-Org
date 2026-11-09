@@ -13,10 +13,9 @@
     <button data-page="people"><span>♙</span> People & Perspectives</button>
     <button data-page="evidence"><span>▣</span> Internal Evidence</button>
     <button data-page="constraints"><span>⚖</span> Constraints & Resources</button>
-    <button data-page="updates"><span>◷</span> Management Updates</button>
+    
   </nav>
-  <div class="side-bottom"><div class="side-caption">SERVICE COVERAGE</div><b>Selected Manhattan, Queens & Bronx routes</b><p>Initial review: October–November 2026</p><div class="side-caption">CURRENT RELEASE</div><span class="release-chip">● Week 10 · Available</span></div>
-</aside>
+  </aside>
 <div class="main">
   <header class="top"><div><span class="top-kicker">CITYMEALS ON WHEELS</span><h2>Service Quality & Volunteer Coordination Portal</h2><small>Program delivery · Community connection · Operational stewardship</small></div><div class="tools"><label class="search">⌕ <input id="globalSearch" placeholder="Search case pages, incidents or people…" aria-label="Search portal"></label><span class="term">Fall 2026</span></div></header>
   <main id="pageContainer">
@@ -38,7 +37,7 @@
     <section data-content="people" class="page"><div class="page-top"><small>INTERNAL DIRECTORY</small><h2>People & Perspectives</h2><p>The same operation looks different from logistics, volunteer coordination, community services and performance analysis. Open a staff profile for a fuller account of their priorities and concerns.</p></div><div class="staff-grid" id="peopleList"></div></section>
     <section data-content="evidence" class="page"><div class="page-top"><small>INITIAL EVIDENCE LIBRARY · WEEK 10</small><h2>Internal Reports & Notes</h2><p>These initial documents use different definitions, time windows and levels of completeness. Open them to examine the evidence rather than taking headlines at face value.</p></div><div class="evidence-grid" id="documentList"></div></section>
     <section data-content="constraints" class="page"><div class="page-top"><small>DECISION CONTEXT</small><h2>Constraints, Resources & Responsibilities</h2><p>Management has not approved a specific solution or purchased an AI system. Proposed changes must account for reliable meals, appropriate contact, volunteer wellbeing and privacy.</p></div><div class="grid g2"><div class="panel"><h3>Initial Management Boundaries</h3><div id="limitsTable"></div></div><div class="panel"><h3>Stakeholder Trade-offs</h3><div class="note-stack"><p><b>Older neighbors:</b> Reliability, dignity, privacy, continuity and meaningful communication.</p><p><b>Volunteers:</b> Predictable assignments, practical routes, realistic expectations and support when plans change.</p><p><b>Program coordinators:</b> Cover every delivery without accumulating avoidable follow-up work or compromising safeguards.</p><p><b>Community partners:</b> Meet local needs using staff capacity that may already be stretched.</p><p><b>Funders and leadership:</b> Demonstrate responsible stewardship without confusing delivery volume with the organization's full mission.</p></div></div></div><div class="panel"><h3>Technology and Human Oversight</h3><p>Teams may explore AI-supported sorting of fictional communication records, volunteer scheduling suggestions, anonymized service-pattern summaries or clearer multilingual outreach. However, a model cannot independently determine an older person's wellbeing, eligibility, or urgent response needs; those decisions require qualified people and established procedures.</p></div></section>
-    <section data-content="updates" class="page"><div class="page-top"><small>EVIDENCE RELEASE SCHEDULE</small><h2>Management Updates</h2><p>Initial evidence is available now. Later releases are held outside this public student file until the appropriate week.</p></div><div class="release-list" id="releaseList"></div></section>
+    
   </main>
   <footer><span>CASE 06 · CLASSROOM MANAGEMENT SIMULATION</span><span>People, records and selected service-area figures are created for teaching; this portal is not an official Citymeals system.</span></footer>
 </div></div>
@@ -236,11 +235,10 @@ function renderDocs(){
  $$('#documentList [data-doc]').forEach(btn=>btn.addEventListener('click',()=>{let d=CASE.docs[Number(btn.dataset.doc)];showModal(d.title,`<div class="meta-row"><span>${esc(d.id)}</span><span>${esc(d.type)}</span><span>${esc(d.date)}</span></div><p>${esc(d.intro)}</p>${d.sections.map(([h,p])=>`<div class="modal-highlight"><b>${esc(h)}</b><p>${esc(p)}</p></div>`).join('')}`)}));
 }
 function renderLimits(){ $('#limitsTable').innerHTML=`<table class="limits-table"><tbody>${CASE.limits.map(([a,b])=>`<tr><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join('')}</tbody></table>`;}
-function renderReleases(){ $('#releaseList').innerHTML=CASE.releases.map(r=>`<div class="release"><div class="week ${r.open?'':'locked'}">${esc(r.week)}</div><div><h3>${esc(r.name)}</h3><p>${esc(r.desc)}</p></div><div class="state">${r.open?'● Available':'○ Not released'}</div></div>`).join('');}
 function setupGlobalSearch(){
- $('#globalSearch').addEventListener('keydown',e=>{if(e.key!=='Enter')return;let q=e.target.value.trim().toLowerCase();if(!q)return;const routes=[['delivery','dispatch'],['incident','dispatch'],['meal','dispatch'],['volunteer','volunteers'],['coverage','volunteers'],['comment','voices'],['recipient','voices'],['feedback','voices'],['staff','people'],['person','people'],['document','evidence'],['budget','constraints'],['constraint','constraints'],['update','updates'],['story','story']];let match=routes.find(([key])=>q.includes(key));navigate(match?match[1]:'evidence');});
+ $('#globalSearch').addEventListener('keydown',e=>{if(e.key!=='Enter')return;let q=e.target.value.trim().toLowerCase();if(!q)return;const routes=[['delivery','dispatch'],['incident','dispatch'],['meal','dispatch'],['volunteer','volunteers'],['coverage','volunteers'],['comment','voices'],['recipient','voices'],['feedback','voices'],['staff','people'],['person','people'],['document','evidence'],['budget','constraints'],['constraint','constraints'],['story','story']];let match=routes.find(([key])=>q.includes(key));navigate(match?match[1]:'evidence');});
 }
-renderOverview();renderChapters();setupIncidents();setupMetrics();setupVoices();renderPeople();renderDocs();renderLimits();renderReleases();setupGlobalSearch();
+renderOverview();renderChapters();setupIncidents();setupMetrics();setupVoices();renderPeople();renderDocs();renderLimits();setupGlobalSearch();
 if(location.hash&&$(`[data-content="${location.hash.slice(1)}"]`))navigate(location.hash.slice(1));
 </script>
 <!-- PA3003_WEEK11_ACTIONS_START -->
